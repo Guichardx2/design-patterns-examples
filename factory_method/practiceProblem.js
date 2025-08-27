@@ -11,18 +11,39 @@ class CreditCard {
   }
 }
 
+class CardFactory {
+
+  static types = {
+    debit: DebitCard,
+    credit: CreditCard,
+  };
+
+  static createCard(type) {
+    const CardClass = this.types[type];
+    if (!CardClass) {
+      throw new Error("Tipo de cartão ou pagamento ainda não suportado");
+    }
+    return new CardClass();
+  }
+}
+
 // Código do cliente
 function main() {
-  const type = "credit card";
+  const types= ["credit", "debit"];
 
   let expenses;
-  if (type === "debit card") {
-    expenses = new DebitCard();
-  } else if (type === "credit card") {
-    expenses = new CreditCard();
+
+  try {
+    
+    types.forEach(type => {
+      expenses = CardFactory.createCard(type);
+      expenses.pay(type, "R$ 500,00");
+    });
+
+  } catch (e) {
+    throw new Error("Erro ao processar pagamento", e.message);
   }
 
-  expenses.pay(`${type}`, "R$ 500,00");
 }
 
 main();
