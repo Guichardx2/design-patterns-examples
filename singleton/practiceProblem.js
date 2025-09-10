@@ -1,6 +1,10 @@
 // Classe Database
 class Database {
   constructor(connectionString) {
+    if (Database.instance) {
+      return Database.instance;
+    }
+
     this.connectionString = connectionString;
     this.id = Math.random();
     console.log(`🔌 Nova conexão criada: ${this.id}`);
