@@ -1,31 +1,46 @@
 // Muitas combinações duplicadas
-class AudioWindows {
-  play() {
-    console.log("Reproduzindo áudio no Windows");
+class Audio {
+  play(so) {
+    console.log(`Reproduzindo áudio no ${so}`);
   }
 }
 
-class AudioLinux {
-  play() {
-    console.log("Reproduzindo áudio no Linux");
+
+class Video {
+  play(so) {
+    console.log(`Reproduzindo vídeo no ${so}`);
   }
 }
 
-class VideoWindows {
-  play() {
-    console.log("Reproduzindo vídeo no Windows");
+class SO {
+  constructor(format) {
+    this.format = format;
   }
 }
 
-class VideoLinux {
-  play() {
-    console.log("Reproduzindo vídeo no Linux");
+class Windows extends SO {
+  execMedia() {
+    this.format.play("Windows");
   }
 }
 
-// Cliente
-const a1 = new AudioWindows();
-a1.play();
+class Linux extends SO {
+  execMedia() {
+    this.format.play("Linux");
+  }
+}
 
-const v1 = new VideoLinux();
-v1.play();
+const audio = new Audio();
+const video = new Video();
+
+const w = new Windows(audio);
+w.execMedia();
+
+const w2 = new Windows(video);
+w2.execMedia();
+
+const l = new Linux(video);
+l.execMedia();
+
+const l2 = new Linux(audio);
+l2.execMedia();
