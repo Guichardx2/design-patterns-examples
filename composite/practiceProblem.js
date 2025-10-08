@@ -1,27 +1,37 @@
+// Componente base
+class UIComponent {
+  render(indent = "") {
+    throw new Error("Método abstrato!");
+  }
+}
+
 // Componentes simples
-class Button {
+class Button extends UIComponent {
   constructor(label) {
+    super();
     this.label = label;
   }
 
-  draw() {
-    console.log(`Botão: [${this.label}]`);
+  render(indent = "") {
+    console.log(`${indent}Botão: [${this.label}]`);
   }
 }
 
-class Text {
+class Text extends UIComponent {
   constructor(content) {
+    super();
     this.content = content;
   }
 
-  draw() {
-    console.log(`Texto: "${this.content}"`);
+  render(indent = "") {
+    console.log(`${indent}Texto: "${this.content}"`);
   }
 }
 
-// Painel precisa saber o tipo de cada item manualmente
-class Panel {
+// Componente composto
+class Panel extends UIComponent {
   constructor(name) {
+    super();
     this.name = name;
     this.children = [];
   }
@@ -30,17 +40,9 @@ class Panel {
     this.children.push(child);
   }
 
-  render() {
-    console.log(`Painel: ${this.name}`);
-    this.children.forEach((child) => {
-      if (child instanceof Button) {
-        child.draw();
-      } else if (child instanceof Text) {
-        child.draw();
-      } else if (child instanceof Panel) {
-        child.render();
-      }
-    });
+  render(indent = "") {
+    console.log(`${indent}Painel: ${this.name}`);
+    this.children.forEach((child) => child.render(indent + "   "));
   }
 }
 
